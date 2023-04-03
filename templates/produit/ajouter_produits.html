@@ -106,7 +106,7 @@
                                             <div class="form-row">
                                                 <div class="row select-wrapper">
                                                     <div class="col-lg-12 selects-contant" style="width:370px">
-                                                        <select class="js-basic-single form-control" id="choix_client" name="client" required>
+                                                        <select class="js-basic-single form-control" id="nom_produit" name="nom_produit" required>
                                                             <option>--- choisir la catégorie ---</option>
                                                              {% for prod in produits %}
                                                             <option value="{{prod.id}}">{{prod.designation}}</option>
@@ -118,6 +118,8 @@
                                                     <select class="form-control" name="type" id="type" required>
                                                         <option>--- choisir le type ---</option>
                                                         <option value="DETAIL">DETAIL</option>
+                                                        <option value="DEMI">DEMI</option>
+                                                        <option value="QUART">QUART</option>
                                                         <option value="CARTON">CARTON</option>
                                                         <option value="PACK">PACK</option>
                                                     </select>

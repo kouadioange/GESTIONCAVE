@@ -33,6 +33,8 @@ class TypeEmballage(models.Model):
     LIBELLE = (
         ('DETAIL', 'DETAIL'),
         ('CARTON', 'CARTON'),
+        ('DEMI', 'DEMI'),
+        ('QUART', 'QUART'),
         ('PACK', 'PACK'),
     )
     produit = models.ForeignKey(Produit, max_length=200, on_delete=models.CASCADE, null=True, blank=True)
