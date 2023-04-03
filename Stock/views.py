@@ -45,8 +45,12 @@ def accueil(request):
             nom_moins_vendu = str(i.produit)
 
         total = total + i.quantite_stock
-    le_plus_vendu = str(max(v))
-    le_moins_vendu = str(min(v))
+    if not v:
+        le_plus_vendu = 0
+        le_moins_vendu = 0
+    else:
+        le_plus_vendu = str(max(v))
+        le_moins_vendu = str(min(v))
     context = {
         'compte_produit': compte_produit,
         'total': total,
