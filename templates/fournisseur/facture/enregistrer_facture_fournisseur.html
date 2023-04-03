@@ -1,0 +1,152 @@
+{% extends 'base/main.html'%}
+{% load static %}
+{% block title %} Enregistrer Facture Fournisseur {% endblock %}
+
+
+{% block nave%}
+    {% include 'base/nav-bar.html' %}
+{% endblock nave%}
+
+{% block content%}
+{% if user.is_staff %}
+<!-- begin app -->
+<div class="app-container">
+    <!-- begin app-main -->
+    <div class="app-main" id="main">
+        <!-- begin container-fluid -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    {% include 'base/message.html'%}
+                </div>
+            </div>
+
+            <!-- begin row -->
+            <div class="row">
+                <div class="col-xxl-9 m-b-30">
+                    <div class="card card-statistics dating-contant h-100 mb-0">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h4 class="card-title">Enregistrer Facture</h4>
+                                </div>
+                                <div class="col-lg-6">
+                                    <a href=" {% url 'liste_facture_fournisseur' %}" type="button" class="btn btn-primary" >Liste de toutes les factures</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body" style="height: 300px">
+                            <div class="table">
+                                <div class="row">
+
+                                    <div class="col-lg-10">
+                                        <form method="POST" enctype="multipart/form-data" action="#">
+                                            {% csrf_token %}
+                                            <div class="form-row">
+                                                <div class="form-group col-md-2">
+                                                </div>
+                                                <div class="form-group col-md-8">
+                                                    <input type="text" readonly class="form-control" name="fournisseur" value="{{fournisseurs}}">
+                                                </div>
+                                                <div class="form-group col-md-2">
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-2">
+                                                </div>
+                                                <div class="form-group col-md-8">
+                                                    <input type="text" onkeyup="this.value=this.value.toUpperCase()" class="form-control" value="{{reference}}" name="ref_facture" required>
+                                                </div>
+                                                <div class="form-group col-md-2">
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-2">
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <input type="number" placeholder="Montant Facture" class="form-control" value="{{total}}" name="montant_facture" required>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <input type="number" placeholder="Avance" class="form-control"  name="avance" required>
+                                                </div>
+                                                <div class="form-group col-md-2">
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-2">
+                                                </div>
+                                                <div class="form-group col-md-8">
+                                                    <input type="Date" class="form-control" name="date_facturation" required>
+                                                </div>
+                                                <div class="form-group col-md-2">
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-3">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <input type="submit" class="btn btn-primary" name="enregistrer" value="Enregistrer" required>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <input type="reset" class="btn btn-primary" value="Réinitialiser" required>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                </div>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                    <div class="col-lg-2">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end container-fluid -->
+        <div class="modal fade" id="recherche" tabindex="-1" role="dialog" aria-labelledby="verticalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <h5 class="modal-title" id="verticalCenterTitle"> Recherche...</h5>
+                            </div>
+                            <div class="col-lg-4">
+                                <a type="button" href="{% url 'liste_approvision' %}" class="btn btn-info" name="voir_tous" >Tous voir</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <form method="POST" enctype="multipart/form-data" action="{% url 'liste_approvision' %}">
+                                    {% csrf_token %}
+                                    <div class="form-row">
+                                        <div class="form-group col-lg-6">
+                                            <input type="text" readonly class="form-control" name="fournisseur" value="{{fournisseurs}}">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <input type="date" class="form-control"  name="date_rechercher" required>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <input type="submit" class="btn btn-info" value="Rechercher"  name="boutton_recherche">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end app-main -->
+</div>
+<!-- end app -->
+{% else %}
+    {% include 'base/message_page.html' %}
+{% endif %}
+{% endblock %}

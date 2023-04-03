@@ -1,0 +1,98 @@
+{% extends 'base/main.html'%}
+{% load static %}
+{% block title %} Payer et faire la monnaie {% endblock %}
+
+
+{% block nave%}
+    {% include 'base/nav-bar.html' %}
+{% endblock nave%}
+
+{% block content%}
+
+<!-- begin app -->
+<div class="app-container">
+    <!-- begin app-main -->
+    <div class="app-main" id="main">
+        <!-- begin container-fluid -->
+        <div class="container-fluid">
+            <!-- begin row -->
+            <div class="row">
+                <div class="col-xxl-9 m-b-30">
+                    <div class="card card-statistics dating-contant h-100 mb-0">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h4 class="card-title">Paiement espèce de la facture N°: {{facture_obj}}</h4>
+                                </div>
+                                <div class="col-lg-6">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body" style="height: 350px">
+                            <div class="table">
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <form action="{% url 'generer_pdf' facture_obj %}" id="formulaire_payer_monnaie" method="post">
+                                            {% csrf_token %}
+                                            <div class="row">
+                                                <div class="col-lg-2">
+                                                    .
+                                                </div>
+                                                <div class="col-lg-8" id="monDiv">
+                                                    <label> Montant à payer: </label>
+                                                    <input type="text" class="form-control" id="montant_a_payer" name="montant_a_payer" value="{{ total_global }}" readonly><br>
+                                                    <label> Somme Réçue: </label>
+                                                    <input type="number" class="form-control" onblur="calcul()" id="somme_recu" name="somme_recu" placeholder="Somme recu"><br>
+                                                    <label> Avoir </label>
+                                                    <input type="text" class="form-control" id="relicat" name="relicat" placeholder="monnaie" value="" readonly>
+
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <hr>
+                                                        <button type="submit" name="payer" class="btn btn-warning">Payer</button>
+                                                    <hr>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-lg-2">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end container-fluid -->
+    </div>
+    <!-- end app-main -->
+</div>
+<script>
+    function calcul(){
+        var montant_a_payer = document.getElementById("formulaire_payer_monnaie").elements["montant_a_payer"].value;
+        var somme_recu = parseFloat(document.getElementById("formulaire_payer_monnaie").elements["somme_recu"].value);
+        var relicat = somme_recu - montant_a_payer;
+        document.getElementById("formulaire_payer_monnaie").elements["relicat"].value = relicat;
+
+        // Récupérer l'élément div parent
+        var parentDiv = document.getElementById("monDiv");
+
+        // Créer un nouvel élément input
+        var newInput = document.createElement("input");
+
+        // Ajouter des attributs à l'élément input
+        newInput.setAttribute("type", "text");
+        newInput.setAttribute("name", "monInput");
+        newInput.setAttribute("class", "form-control");
+
+        // Ajouter l'élément input à l'élément div parent
+        parentDiv.appendChild(newInput);
+        myInput.value = "Mon texte ajouté";
+    }
+</script>
+<!-- end app -->
+{% endblock %}

@@ -1,0 +1,285 @@
+{% extends 'base/main.html'%}
+{% load static %}
+{% block title %} Liste-produits {% endblock %}
+
+
+{% block nave%}
+    {% include 'base/nav-bar.html' %}
+{% endblock nave%}
+
+{% block content%}
+
+<!-- begin app -->
+<div class="app-container" xmlns="http://www.w3.org/1999/html">
+    <!-- begin app-main -->
+    <div class="app-main" id="main">
+        <!-- begin container-fluid -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    {% include 'base/message.html'%}
+                </div>
+            </div>
+            <!-- begin row -->
+            <div class="row">
+                <div class="col-md-12 m-b-30">
+                    <!-- begin page title -->
+                    <div class="d-block d-sm-flex flex-nowrap align-items-center">
+                        <div class="page-title mb-2 mb-sm-0">
+                            <h1>Espace Caisse</h1>
+                        </div>
+                        <div class="ml-auto d-flex align-items-center">
+                            <nav>
+                                <ol class="breadcrumb p-0 m-b-0">
+                                    <li class="breadcrumb-item">
+                                        <a href="index.html"><i class="ti ti-home"></i></a>
+                                    </li>
+                                    <li class="breadcrumb-item">
+                                        Espace caisse
+                                    </li>
+                                    <li class="breadcrumb-item active text-primary" aria-current="page">vendre</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                    <!-- end page title -->
+                </div>
+            </div>
+            <!-- end row -->
+            <!-- begin row -->
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card card-statistics">
+                        <div class="card-header">
+                            <div class="card-heading">
+                                <h4 class="card-title">Recherche</h4>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-body">
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <div class="row select-wrapper">
+                                            <!-- code barre plus tard
+                                            <div class="col-lg-12">
+                                                <label>Code barre :</label>
+                                                <input type="text" class="form-control" name="code_barre" id="code_barre">
+                                            </div>
+                                            -->
+                                            <div class="col-lg-7 selects-contant">
+                                                <label>Désignation :</label>
+                                                <select class="js-basic-single form-control" id="produit_a_vendre" name="produit_a_vendre" required>
+                                                    <option value="">---------Choisir une boisson---------</option>
+                                                    {% for produit in produits %}
+                                                        <option value="{{produit.id}}">{{produit.produit}} {{produit.libelle}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <label>Qté :</label>
+                                                <input type="number" class="form-control" name="quantite_a_vendre" id="quantite_a_vendre">
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <label>_</label>
+                                                <button type="submit" name="creer_vente" class="btn btn-info"><i class="ti ti-plus"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card card-statistics">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="card-heading">
+                                        <h4 class="card-title">Liste des achats</h4>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="card-heading">
+                                        <h4 class="card-title">Nombre produits : {{ compte_produits }}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table">
+
+                                <table class="table mb-0">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Désignation</th>
+                                            <th scope="col">qté</th>
+                                            <th scope="col">Prix Unitaire</th>
+                                            <th scope="col">Total unitaire</th>
+                                        </tr>
+
+                                    </thead>
+
+                                    <tbody>
+                                    {% for vente_sur_facture in vente_sur_factures %}
+                                        <tr>
+                                            <th scope="row">{{vente_sur_facture.id}}</th>
+                                            <td>{{vente_sur_facture.type_emballage}}</td>
+                                            <td>{{vente_sur_facture.quantite_vente}}</td>
+                                            <td>{{vente_sur_facture.type_emballage.prix_vente}}</td>
+                                            <td>{{vente_sur_facture.total_unitaire}}</td>
+
+                                        </tr>
+                                    {% endfor %}
+                                    {% if total_global > 0 %}
+                                    <tr style="background-color: green; font-size:20px">
+                                        <td colspan="4"  > Total </td>
+                                        <td colspan="1"> {{ total_global }}</td>
+                                    </tr>
+                                    {% endif %}
+                                    </tbody>
+
+                                </table>
+                                <br>
+                                {% if total_global > 0 %}
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        .
+                                    </div>
+                                    <div class="col-lg-7">
+                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#voir_facture"> Voir la facture </button>
+                                        <a href="{% url 'payer_monnaie' facture_obj %}" type="button" class="btn btn-warning" > Payer </a>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        .
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end container-fluid -->
+        <div class="modal fade" id="voir_facture" tabindex="-1" role="dialog" aria-labelledby="verticalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h5 class="modal-title" > Numero Facture: </h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table">
+                            <table class="table mb-0">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Désignation</th>
+                                        <th scope="col">qté</th>
+                                        <th scope="col">Prix Unitaire</th>
+                                        <th scope="col">Total unitaire</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+
+                                </thead>
+
+                                <tbody>
+                                {% for vente_sur_facture in vente_sur_factures %}
+                                    <tr>
+                                        <th scope="row">{{vente_sur_facture.id}}</th>
+                                        <td>{{vente_sur_facture.type_emballage}}</td>
+                                        <td><span id="valeur{{vente_sur_facture.id}}">{{vente_sur_facture.quantite_vente}}</span></td>
+                                        <td><span id="prix{{vente_sur_facture.id}}">{{vente_sur_facture.type_emballage.prix_vente}}</span></td>
+                                        <td><span id="total">{{vente_sur_facture.total_unitaire}}</span></td>
+                                        <td>
+                                            <a class="btn btn-info" href="{% url 'crementer' vente_sur_facture.id %}" id="incrementer{{vente_sur_facture.id}}" name="incrementer" type="button"><i class="ti ti-plus"></i></a>
+                                            <a class="btn btn-danger" href="{% url 'crementer' vente_sur_facture.id %}" id="decrementer{{vente_sur_facture.id}}" name="decrementer"  type="button"><i class="ion ion-ios-remove-outline"></i></a>
+                                            <a class="btn btn-danger" href="#" type="button"><i class="ion ion-ios-trash"></i></a>
+                                        </td>
+
+
+                                    </tr>
+                                {% endfor %}
+                                {% if total_global > 0 %}
+                                <tr style="background-color: green; font-size:20px">
+                                    <td colspan="5"  > Total </td>
+                                    <td colspan="1"> <span>{{ total_global }}</span> </td>
+                                </tr>
+                                {% endif %}
+                                </tbody>
+
+                            </table>
+                            <br>
+                            {% if total_global > 0 %}
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <center>
+                                        <button type="button" class="btn btn-warning" data-toggle="modal" name="payer" data-target="#payer"> Payer </button>
+                                    </center>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- end app-main -->
+<script>
+  const valeurs = document.querySelectorAll("span[id^='valeur']");
+  const incrementers = document.querySelectorAll("a[id^='incrementer']");
+  const decrementers = document.querySelectorAll("a[id^='decrementer']");
+
+  // Boucle à travers les valeurs et ajoute des gestionnaires d'événements de clic pour chaque bouton
+  for (let i = 0; i < valeurs.length; i++) {
+    incrementers[i].addEventListener("click", () => incrementer(valeurs[i]));
+    decrementers[i].addEventListener("click", () => decrementer(valeurs[i]));
+  }
+
+  // Fonction d'incrémentation
+  function incrementer(valeurEl) {
+    const currentValue = parseInt(valeurEl.innerText);
+    valeurEl.innerText = currentValue + 1;
+  }
+
+  // Fonction de décrémentation
+  function decrementer(valeurEl) {
+    const currentValue = parseInt(valeurEl.innerText);
+    valeurEl.innerText = currentValue - 1;
+  }
+
+var total = document.getElementById("total");
+        var netPrice = document.getElementsByClassName("netPrice");
+        function price(price) {
+            var cal = 0;
+            var amount = price.parentElement.parentElement.children[1].children[0].value;
+            var res = price.parentElement.parentElement.children[2].innerHTML = amount * price.value;
+            for (let i = 0; i < netPrice.length; i++) {
+                cal += parseInt(netPrice[i].innerText);
+            }
+            total.innerHTML = cal;
+        }
+        function amount(amount) {
+            var cal = 0;
+            var price = amount.parentElement.parentElement.children[0].children[0].value;
+            var res = amount.parentElement.parentElement.children[2].innerHTML = price * amount.value;
+            for (let i = 0; i < netPrice.length; i++) {
+                cal += parseInt(netPrice[i].innerText);
+            }
+            total.innerHTML = cal;
+        }
+</script>
+</div>
+<!-- end app -->
+{% endblock %}

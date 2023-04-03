@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>{% block title %} {% endblock title %} - MAQUIS_RESTO_CAVE</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- app favicon -->
+    <link rel="shortcut icon" href="{% static 'assets/img/favicon.ico' %}">
+    <!-- google fonts -->
+    <!-- htmx fonts -->
+    <script src="https://unpkg.com/htmx.org@1.8.5"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <!-- plugin stylesheets -->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors.css' %}" />
+    <!-- app style -->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css' %}" />
+</head>
+<body>
+    <div class="app">
+        <!-- begin pre-loader -->
+            <div class="loader">
+                <div class="h-100 d-flex justify-content-center">
+                    <div class="align-self-center">
+                        <img src="{% static 'assets/img/loader/loader.svg' %}" alt="loader">
+                    </div>
+                </div>
+            </div>
+        <!-- end pre-loader -->
+    {% block nave%}
+    <!-- begin app-header -->
+
+    <!-- end app-header -->
+    {% endblock %}
+    {% block content%}
+
+    {% endblock %}
+    <!-- begin footer -->
+    <footer class="footer">
+        <div class="row">
+            <div class="col-12 col-sm-6 text-center text-sm-left">
+                <p>&copy; Copyright 2019. All rights reserved.</p>
+            </div>
+            <div class="col  col-sm-6 ml-sm-auto text-center text-sm-right">
+
+            </div>
+        </div>
+    </footer>
+    <!-- end footer -->
+
+    </div>
+
+<!-- plugins -->
+    <script src="{% static 'assets/js/vendors.js' %}"></script>
+
+    <!-- custom app -->
+    <script src="{% static 'assets/js/app.js' %}"></script>
+<script src="{% static 'assets/js/customer.js' %}"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>

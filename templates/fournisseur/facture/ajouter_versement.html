@@ -1,0 +1,130 @@
+{% extends 'base/main.html'%}
+{% load static %}
+{% block title %} versement Fournisseur {% endblock %}
+
+
+{% block nave%}
+    {% include 'base/nav-bar.html' %}
+{% endblock nave%}
+
+{% block content%}
+{% if user.is_staff %}
+<!-- begin app -->
+<div class="app-container">
+    <!-- begin app-main -->
+    <div class="app-main" id="main">
+        <!-- begin container-fluid -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    {% include 'base/message.html'%}
+                </div>
+            </div>
+
+            <!-- begin row -->
+            <div class="row">
+                <div class="col-xxl-9 m-b-30">
+                    <div class="card card-statistics dating-contant h-100 mb-0">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h4 class="card-title">Effectuer un Versement</h4>
+                                </div>
+                                <div class="col-lg-6">
+                                    <a href="#" ><b> Versement du Fournisseur : {{facture.fournisseur}} </b></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body" style="height: 400px">
+                            <div class="table">
+                                <div class="row">
+
+                                    <div class="col-lg-10">
+                                        <form method="POST" enctype="multipart/form-data" id="formulaire" action="#">
+                                            {% csrf_token %}
+                                            <div class="form-row">
+                                                <div class="form-group col-md-2">
+                                                </div>
+                                                <div class="form-group col-md-8">
+                                                    <input readonly type="text" value="{{facture.fournisseur}}" class="form-control"  name="fournisseur">
+                                                </div>
+                                                <div class="form-group col-md-2">
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-2">
+                                                </div>
+                                                <div class="form-group col-md-8">
+                                                    <input readonly type="text" value="{{facture.reference}}" class="form-control"  name="reference">
+                                                </div>
+                                                <div class="form-group col-md-2">
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-2">
+                                                </div>
+                                                <div class="form-group col-md-8">
+                                                    <input readonly type="number" value="{{facture.reste_a_payer}}" class="form-control"  name="reste_a_payer">
+                                                </div>
+                                                <div class="form-group col-md-2">
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-2">
+                                                </div>
+                                                <div class="form-group col-md-8">
+                                                    <input type="number" placeholder="Montant versement" class="form-control" name="montant_versement" required>
+                                                </div>
+                                                <div class="form-group col-md-2">
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-2">
+                                                </div>
+                                                <div class="form-group col-md-8">
+                                                    <input type="Date" class="form-control" name="date_versement" required>
+                                                </div>
+                                                <div class="form-group col-md-2">
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-3">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <input type="submit" class="btn btn-primary" name="enregistrer_versement" value="Enregistrer">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <input type="reset" class="btn btn-primary" value="Réinitialiser">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                </div>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                    <div class="col-lg-2">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end container-fluid -->
+
+    </div>
+    <!-- end app-main -->
+</div>
+<!-- end app -->
+<script>
+    function calcul(){
+        var fournisseur = document.getElementById("formulaire").elements["fournisseur"].value;
+        var reference = document.getElementById("formulaire").elements["ref_facture"].value;
+        document.getElementById("formulaire").elements["ref_facture"].value = "";
+    }
+</script>
+{% else %}
+    {% include 'base/message_page.html' %}
+{% endif %}
+{% endblock %}

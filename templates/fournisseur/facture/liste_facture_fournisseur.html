@@ -1,0 +1,141 @@
+{% extends 'base/main.html'%}
+{% load static %}
+{% block title %} Liste Facture Fournisseurs {% endblock %}
+
+
+{% block nave%}
+    {% include 'base/nav-bar.html' %}
+{% endblock nave%}
+
+{% block content%}
+{% if user.is_staff %}
+<!-- begin app -->
+<div class="app-container">
+    <!-- begin app-main -->
+    <div class="app-main" id="main">
+        <!-- begin container-fluid -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    {% include 'base/message.html'%}
+                </div>
+            </div>
+            <!-- begin row -->
+            <div class="row">
+                <div class="col-xxl-9 m-b-30">
+                    <div class="card card-statistics dating-contant h-100 mb-0">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <h4 class="card-title">Facture des Fournisseurs</h4>
+                                </div>
+                                <div class="col-lg-9">
+                                    <form method="post">
+                                        {%csrf_token%}
+                                        <div class="form-row">
+                                            <div class="form-group col-md-3">
+                                                <a class="btn btn-xm btn-primary" href="{%url 'liste_facture_fournisseur'%}" name="Voir_tous">Voir tous</a>
+                                            </div>
+                                            <div class="form-group col-md-7">
+                                                <input type="date" name="date_recherche" required class="form-control">
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <button type="submit" class="btn btn-xm btn-primary" name="recherche"><i class="ion ion-ios-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body pt-2 scrollbar scroll_dark" style="height: 400px">
+                            <div class="table-responsive">
+
+                                <table id="datatable-buttons" class="table table-striped">
+
+                                    <thead>
+                                        <tr>
+                                            <th class="border-top-0">#</th>
+                                            <th class="border-top-0">Réference</th>
+                                            <th class="border-top-0">Fournisseur</th>
+                                            <th class="border-top-0">Montant Facture</th>
+                                            <th class="border-top-0">Reste à payer</th>
+                                            <th class="border-top-0">Date</th>
+                                            <th class="border-top-0">status</th>
+                                            <th class="border-top-0">Action</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody class="text-muted">
+                                    {% for facture in factures %}
+                                        <tr>
+                                            <td>{{facture.id}}</td>
+
+                                            <td>{{facture.reference}}</td>
+                                            <td>
+                                                {{facture.fournisseur.nom_prenom}}
+                                            </td>
+                                            <td>
+                                                <label style="font-size:15px;" class="badge mb-0 badge-info-inverse">{{facture.montant_facture }}</label>
+                                            </td>
+                                            <td>
+                                                <label style="font-size:15px;" class="badge mb-0 badge-success-inverse">{{facture.reste_a_payer }}</label>
+                                            </td>
+                                            <td>{{facture.date_facturation}}</td>
+                                            <td>
+                                                {% if facture.reste_a_payer <= 0 %}
+                                                <label style="font-size:15px;" class="badge mb-0 badge-success-inverse  ">
+                                                     {{facture.status}}
+                                                </label>
+                                                {% else %}
+                                                <label style="font-size:15px;" class="badge mb-0 badge-danger-inverse  ">
+                                                     {{facture.status}}
+                                                </label>
+                                                {%endif%}
+                                            </td>
+                                            <td>
+                                            <a href="{% url 'voir_detail_facture_fournisseur' facture.reference %}" class="btn btn-warning"><i class="ion ion-ios-eye-outline"></i></a>
+                                                <a type="button" class="btn btn-xm btn-primary" href="#"><i class="fa fa-pencil"></i></a>
+                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#suppModal{{facture.id}}"><i class="fa fa-trash" ></i></button>
+                                            </td>
+                                        </tr>
+                                        <div class="modal fade" id="suppModal{{facture.id}}" tabindex="-1" role="dialog" aria-labelledby="verticalCenterTitle" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="verticalCenterTitle"> Voulez-vous supprimer cette facture <span class="">({{ facture.reference }})</span> ??? </h5>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <form method="post" action="#">
+                                                            {%csrf_token%}
+                                                            <input type="text" class="form-control" hidden value="{{ facture.id }}" name="id_pour_supprimer" >
+                                                            <button type="button" class="btn btn-dark" data-dismiss="modal">Annuler</button>
+                                                            <button type="submit" name="suppboutton" class="btn btn-danger">Supprimer</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor%}
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-md-12 d-flex justify-content-center align-items-center">
+                    {% include 'base/paginations.html' with page=factures %}
+                </div>
+            </div>
+        </div>
+        <!-- end container-fluid -->
+    </div>
+    <!-- end app-main -->
+</div>
+<!-- end app -->
+{% else %}
+    {% include 'base/message_page.html' %}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,123 @@
+{% extends 'base/main.html'%}
+{% load static %}
+{% block title %} Liste-Fournisseur{% endblock %}
+
+
+{% block nave%}
+    {% include 'base/nav-bar.html' %}
+{% endblock nave%}
+
+{% block content%}
+
+{% if user.is_staff %}
+<!-- begin app -->
+<div class="app-container">
+    <!-- begin app-main -->
+    <div class="app-main" id="main">
+        <!-- begin container-fluid -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    {% include 'base/message.html'%}
+                </div>
+            </div>
+            <!-- begin row -->
+            <div class="row">
+                <div class="col-xxl-9 m-b-30">
+                    <div class="card card-statistics dating-contant h-100 mb-0">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h4 class="card-title">Liste des Fournisseurs</h4>
+                                </div>
+                                <div class="col-lg-6">
+                                    <a type="button" href="{% url 'ajouter_fournisseur' %}"  class="btn btn-primary"> Créer Fournisseur </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body pt-2 scrollbar scroll_dark" style="height: 300px">
+                            <div class="table-responsive">
+
+                                <table id="datatable-buttons" class="table table-striped">
+
+                                    <thead>
+                                        <tr>
+                                            <th class="border-top-0">#</th>
+                                            <th class="border-top-0">Nom et Prenom</th>
+                                            <th class="border-top-0">Adresse</th>
+                                            <th class="border-top-0">Email</th>
+                                            <th class="border-top-0">Contact</th>
+                                            <th class="border-top-0">Date ajout</th>
+                                            <th class="border-top-0">status</th>
+                                            <th class="border-top-0">Action</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody class="text-muted">
+                                    {% for fournisseur in fournisseurs %}
+                                        <tr>
+                                            <td>{{fournisseur.id}}</td>
+
+                                            <td>{{ fournisseur.nom_prenom}}</td>
+                                            <td>
+                                                <label class="badge mb-0 badge-success-inverse">{{ fournisseur.adresse}}</label>
+                                            </td>
+                                            <td>
+                                                <label class="badge mb-0 badge-success-inverse">{{ fournisseur.adresse_email }}</label>
+                                            </td>
+                                            <td>
+                                                <label class="badge mb-0 badge-success-inverse">{{ fournisseur.contact}}</label>
+                                            </td>
+                                            <td>
+                                                <label class="badge mb-0 badge-success-inverse">{{ fournisseur.date_creation}}</label>
+                                            </td>
+                                            <td>
+                                                <label class="badge mb-0 badge-success-inverse">{{ fournisseur.status}}</label>
+                                            </td>
+                                            <td>
+                                                <a type="button" class="btn btn-xm btn-primary" href="#"><i class="fa fa-pencil"></i></a>
+                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#suppModal{{fournisseur.id}}"><i class="fa fa-trash" ></i></button>
+                                            </td>
+                                        </tr>
+                                    {% endfor%}
+                                    </tbody>
+
+                                    <div class="modal fade" id="suppModal{{fournisseur.id}}" tabindex="-1" role="dialog" aria-labelledby="verticalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="verticalCenterTitle"> Voulez-vous supprimer ce Fournisseur <span class="">({{ fournisseur.nom_prenom }})</span> ??? </h5>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <form method="post">
+                                                        {%csrf_token%}
+                                                        <input type="text" class="form-control" hidden value="{{ fournisseur.id }}" name="id_pour_supprimer" >
+                                                        <button type="button" class="btn btn-dark" data-dismiss="modal">Annuler</button>
+                                                        <button type="submit" name="suppboutton" class="btn btn-danger">Supprimer</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-md-12 d-flex justify-content-center align-items-center">
+                    {% include 'base/paginations.html' with page=fournisseurs %}
+                </div>
+            </div>
+        </div>
+        <!-- end container-fluid -->
+    </div>
+    <!-- end app-main -->
+</div>
+<!-- end app -->
+{% else %}
+    {% include 'base/message_page.html' %}
+{% endif %}
+{% endblock %}

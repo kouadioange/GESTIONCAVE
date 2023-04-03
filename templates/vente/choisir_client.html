@@ -1,0 +1,127 @@
+{% extends 'base/main.html'%}
+{% load static %}
+{% block title %} Liste-produits {% endblock %}
+
+
+{% block nave%}
+    {% include 'base/nav-bar.html' %}
+{% endblock nave%}
+
+{% block content%}
+
+<!-- begin app -->
+<div class="app-container">
+    <!-- begin app-main -->
+    <div class="app-main" id="main">
+        <!-- begin container-fluid -->
+        <div class="container-fluid">
+            <!-- begin row -->
+            <div class="row">
+                <div class="col-md-12 m-b-30">
+                    <!-- begin page title -->
+                    <div class="d-block d-sm-flex flex-nowrap align-items-center">
+                        <div class="page-title mb-2 mb-sm-0">
+                            <h1>Espace Caisse</h1>
+                        </div>
+                        <div class="ml-auto d-flex align-items-center">
+                            <nav>
+                                <ol class="breadcrumb p-0 m-b-0">
+                                    <li class="breadcrumb-item">
+                                        <a href="index.html"><i class="ti ti-home"></i></a>
+                                    </li>
+                                    <li class="breadcrumb-item">
+                                        Espace caisse
+                                    </li>
+                                    <li class="breadcrumb-item active text-primary" aria-current="page">vendre</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                    <!-- end page title -->
+                </div>
+            </div>
+            <!-- end row -->
+            <!-- begin row -->
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card card-statistics">
+                        <div class="card-header">
+                            <div class="card-heading">
+                                <h4 class="card-title">Choisir Client</h4>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-body">
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <div class="row select-wrapper">
+                                            <div class="col-lg-9 selects-contant">
+                                                <label>Désignation :</label>
+                                                <select class="js-basic-single form-control" id="choix_client" name="choix_client" required>
+                                                    <option value="Standard">Standard</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-lg-3">
+                                                <label>_</label>
+                                                <button type="submit" name="ajout_client" class="btn btn-info"><i class="ti ti-plus"></i>Ajouter</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card card-statistics">
+
+                        <div class="card-body">
+                            <div class="apexchart-wrapper">
+                                <button class="btn btn-primary" data-toggle="modal" data-target="#recherche_point">
+                                    <div style=" font-size:20px; height:70px; width:440px; "> POINTS DU JOUR</div>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end container-fluid -->
+        <div class="modal fade" id="recherche_point" tabindex="-1" role="dialog" aria-labelledby="verticalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <h5 class="modal-title" id="verticalCenterTitle"> Recherche...</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <form method="POST" enctype="multipart/form-data" action="{% url 'point_vente' %}">
+                                    {% csrf_token %}
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <input type="date" class="form-control"  name="date_rechercher_vente" required>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <input type="submit" class="btn btn-info" value="Rechercher"  name="boutton_recherche_vente">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end app-main -->
+</div>
+<!-- end app -->
+{% endblock %}

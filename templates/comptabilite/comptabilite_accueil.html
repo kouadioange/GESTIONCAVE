@@ -1,0 +1,43 @@
+{% extends 'base/main.html'%}
+{% load static %}
+{% block title %} ACCUEIL {% endblock %}
+
+
+{% block nave%}
+    {% include 'base/nav-bar.html' %}
+{% endblock nave%}
+
+{% block content%}
+
+{% if user.is_authenticated and user.is_staff%}
+<!-- begin app -->
+<div class="app-container">
+    <!-- begin app-main -->
+    <div class="app-main" id="main">
+        <!-- begin container-fluid -->
+        <div class="container-fluid">
+            <!-- begin row -->
+            <div class="row">
+                <div class="col-lg-12 m-b-30">
+                    <div class="card card-statistics h-100 mb-0">
+                        <div class="card-body" style="border-radius: 15px 15px;">
+                            <div class="d-flex h-100">
+                                <div class="align-self-center">
+                                    <h3 style="color:red;"> Encore en travaux, veuillez patientez svp.</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- begin container-fluid -->
+    </div>
+    <!-- end app-main -->
+</div>
+<!-- end app -->
+
+{% endif %}
+
+{% endblock %}

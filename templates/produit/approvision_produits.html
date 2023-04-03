@@ -1,0 +1,102 @@
+{% extends 'base/main.html'%}
+{% load static %}
+{% block title %} Approvisionnement {% endblock %}
+
+
+{% block nave%}
+    {% include 'base/nav-bar.html' %}
+{% endblock nave%}
+
+{% block content%}
+{% if user.is_staff%}
+<!-- begin app -->
+<div class="app-container">
+    <!-- begin app-main -->
+    <div class="app-main" id="main">
+        <!-- begin container-fluid -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    {% include 'base/message.html'%}
+                </div>
+            </div>
+            <!-- begin row -->
+            <div class="row">
+                <div class="col-xxl-9 m-b-30">
+                    <div class="card card-statistics dating-contant h-100 mb-0">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h4 class="card-title">Formulaire d'approvisionnement</h4>
+                                </div>
+                                <div class="col-lg-6">
+                                    <a href="{% url 'liste_approvision' %}" class="btn btn-primary" >Liste des Entrées</a>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="card-body" style="height:auto;">
+
+                            <div class="table">
+                                <div class="row">
+                                    <div class="col-lg-12">
+
+                                        <form method="POST" enctype="multipart/form-data" action="#" id="formulaire_facture">
+                                            {% csrf_token %}
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <select class="form-control" name="fournisseur" id="fournisseur" required>
+                                                        <option>--- choisir le Fournisseur ---</option>
+                                                    {% for fournisseur in fournisseurs %}
+                                                        <option value="{{fournisseur.id}}">{{fournisseur.nom_prenom}}</option>
+                                                    {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <input class="form-control" type="text" id="reference" placeholder="Réference" name="reference" required>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <input type="date" class="form-control" id="date_renseigner" name="date_renseigner" required>
+                                                </div>
+                                            </div>
+                                            {% for produit in produits %}
+                                            <div class="form-row"  style="margin-top:20px">
+                                                <div class="col-md-3">
+                                                    <label class="form-label" style="font-size:18px; margin-top:10px; margin-left:10px">{{produit.produit}} {{produit.libelle}}</label>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <input style="height:50px; border-radius:15px 15px;" type="number" placeholder="Quantité" class ="form-control" name="quantite">
+                                                    <input hidden style="height:50px; border-radius:15px 15px;" type="text" value="{{produit.id}}" class ="form-control" name="nom_produit">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label for="inputField1" class="form-label" style="font-size:18px; margin-top:10px; margin-left:10px">Prix d'achat : </label>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <input style="height:50px; border-radius:15px 15px;" type="number" id="inputField1" placeholder="Prix achat" class="form-control" name="prix_achat">
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                            <hr>
+                                            <div class="form-row">
+                                                <input type="submit" class="btn btn-primary" name="approvisionner" value="Approvisionner" >
+                                                <input type="reset" class="btn btn-danger"  value="Réintialiser">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end container-fluid -->
+    </div>
+    <!-- end app-main -->
+</div>
+<!-- end app -->
+
+{% else %}
+    {% include 'base/message_page.html' %}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,244 @@
+<!-- begin app -->
+<div class="app-container">
+    <!-- begin app-main -->
+    <div class="app-main" id="main">
+        <!-- begin container-fluid -->
+        <div class="container-fluid">
+            <!-- begin row -->
+            <div class="row">
+
+                <div class="col-md-12 m-b-30">
+                    <!-- begin page title -->
+                    <div class="d-block d-sm-flex flex-nowrap align-items-center">
+                        <div class="page-title mb-2 mb-sm-0">
+                            <h1>Accueil (Bienvenue, {{request.user}})</h1>
+                        </div>
+                        <div class="ml-auto d-flex align-items-center">
+                            <nav>
+                                <ol class="breadcrumb p-0 m-b-0">
+                                    <li class="breadcrumb-item">
+                                        <a href="{% url 'accueil' %}"><i class="ti ti-home"></i></a>
+                                    </li>
+                                    <li class="breadcrumb-item">
+                                        <a href="{% url 'accueil' %}">Dashboard</a>
+                                    </li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                    <!-- end page title -->
+                </div>
+            </div>
+            <!-- end row -->
+            <div class="row">
+            <div class="col-lg-6 col-xxl-3 m-b-30">
+                <div class="card card-statistics h-100 mb-0">
+                    <div class="card-body">
+                        <div class="d-flex h-100">
+                            <div class="align-self-center">
+                                <div class="apexchart-wrapper">
+                                    <div id="datingdemo5"></div>
+                                </div>
+                            </div>
+                            <div class="align-self-center ml-auto">
+                                <h3 class="f-26 mb-0">{{compte_produit}}</h3>
+                                <p style="font-size: 17px; color:black;">Produits Stock</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-xxl-3 m-b-30">
+                <div class="card card-statistics h-100 mb-0">
+                    <div class="card-body">
+                        <div class="d-flex h-100">
+                            <div class="align-self-center">
+                                <div class="apexchart-wrapper">
+                                    <div id="datingdemo8"></div>
+                                </div>
+                            </div>
+                            <div class="align-self-center ml-auto">
+                                <h3 class="f-26 mb-0"><span class="count">{{total}}</span></h3>
+                                <p style="font-size: 17px; color:black;">Quantité Totale Stock</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-xxl-3 m-b-30">
+                <div class="card card-statistics h-100 mb-0">
+                    <div class="card-body">
+                        <div class="d-flex h-100">
+                            <div class="align-self-center">
+                                <div class="apexchart-wrapper">
+                                    <div id="datingdemo7"></div>
+                                </div>
+                            </div>
+                            <div class="align-self-center ml-auto">
+                                <h4><span>{{nom_plus_vendu}}</span></h4><h3 class="f-26 mb-0"><span class="count">{{le_plus_vendu}}</span></h3>
+                                <p style="font-size: 17px; color:green;">plus vendu</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-xxl-3 m-b-30">
+                <div class="card card-statistics h-100 mb-0">
+                    <div class="card-body">
+                        <div class="d-flex h-100">
+                            <div class="align-self-center">
+                                <div class="apexchart-wrapper">
+                                    <div id="datingdemo6"></div>
+                                </div>
+                            </div>
+                            <div class="align-self-center ml-auto">
+                                <h4><span>{{nom_moins_vendu}}</span></h4><h3 class="f-26 mb-0"><span class="count">{{le_moins_vendu}}</span></h3>
+                                <p style="font-size: 17px; color:red;">moins vendu</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-xxl-3 m-b-30">
+                <div class="card card-statistics h-100 mb-0">
+                        <div class="card-body" style="background-color: green;">
+                            <div class="d-flex h-100">
+                                <div class="align-self-center">
+                                    <div>
+                                         <a href="#" data-toggle="modal" data-target="#facture_payer" style="font-size: 25px; color:white;">Fournisseur payé</a>
+                                    </div>
+                                </div>
+
+                                <div class="align-self-center ml-auto">
+                                    <h3 style="font-size: 25px; color:white;">{{compt_facture_payer}}/{{comp_facture}}</h3>
+                                </div>
+
+                            </div>
+                        </div>
+
+                </div>
+            </div>
+            <div class="col-lg-6 col-xxl-3 m-b-30"  style="font-color:white;">
+                <div class="card card-statistics h-100 mb-0">
+                    <div class="card-body" style="background-color: red;">
+                        <div class="d-flex h-100">
+                            <div class="align-self-center">
+                                <div> <a href="#" data-toggle="modal" data-target="#facture_impayer" style="font-size: 25px; color:white;">Fournisseur impayé</a></div>
+                            </div>
+                            <div class="align-self-center ml-auto">
+                                <h3 style="font-size: 25px;color:white;">{{facture_impayer}}/{{comp_facture}}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end container-fluid -->
+    </div>
+    <!-- end app-main -->
+    <!-- begin modal -->
+        <div class="modal fade" id="facture_payer" tabindex="-1" role="dialog" aria-labelledby="verticalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color:green; ">
+                        <div class="row">
+                            <div class="col-lg-12" >
+                                <h5 class="modal-title" style="color:white; font-size:20px"> Facture Soldée </h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table">
+                            <table class="table mb-0">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Fournisseur</th>
+                                        <th scope="col">N° Facture</th>
+                                        <th scope="col">Montant Facture</th>
+                                        <th scope="col">Date soldée</th>
+                                        <th scope="col">Status</th>
+                                    </tr>
+
+                                </thead>
+
+                                <tbody>
+                                {% for facture_payee in liste_facture_payer %}
+                                    <tr>
+                                        <th scope="row">{{facture_payee.id}}</th>
+                                        <td>{{facture_payee.fournisseur}}</td>
+                                        <td>{{facture_payee.reference}}</td>
+                                        <td>{{facture_payee.montant_facture}}</td>
+                                        <td>{{facture_payee.date_facturation}}</td>
+                                        <td>
+                                            {% if facture_payee.reste_a_payer == 0 %}
+                                            <span style="color:green;"><b>OK<i class="ion ion-ios-checkmark-circle"></i></b></span>
+                                            {% endif %}
+                                        </td>
+
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- begin modal -->
+        <div class="modal fade" id="facture_impayer" tabindex="-1" role="dialog" aria-labelledby="verticalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color:red; ">
+                        <div class="row">
+                            <div class="col-lg-12" >
+                                <h5 class="modal-title" style="color:white; font-size:20px"> Facture Impayée </h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table">
+                            <table class="table mb-0">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Fournisseur</th>
+                                        <th scope="col">N° Facture</th>
+                                        <th scope="col">Montant Facture</th>
+                                        <th scope="col">Reste à Payer</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+
+                                </thead>
+
+                                <tbody>
+                                {% for facture_impayee in liste_facture_impayer %}
+                                    <tr>
+                                        <th scope="row">{{facture_impayee.id}}</th>
+                                        <td>{{facture_impayee.fournisseur}}</td>
+                                        <td>{{facture_impayee.reference}}</td>
+                                        <td>{{facture_impayee.montant_facture}}</td>
+                                        <td>{{facture_impayee.reste_a_payer}}</td>
+                                        <td>
+                                            <a class="btn btn-success btn-xm" href="{% url 'ajouter_versement' facture_impayee.id %}" style="color:white"><b>SOLDEE</b></a>
+                                            <a class="btn btn-warning btn-xm" href="{% url 'voir_versement' facture_impayee.id %}" style="color:white"><b>VOIR</b></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end modal -->
+</div>
+</div>
+<!-- end app -->

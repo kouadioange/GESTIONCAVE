@@ -1,0 +1,86 @@
+{% extends 'base/main.html'%}
+{% load static %}
+{% block title %} Voir Versement {% endblock %}
+
+
+{% block nave%}
+    {% include 'base/nav-bar.html' %}
+{% endblock nave%}
+
+{% block content%}
+{% if user.is_staff %}
+<div class="app-main" id="main">
+    <!-- begin container-fluid -->
+    <div class="container-fluid">
+        <!-- begin row -->
+        <div class="row">
+            <div class="col-md-12">
+                {% include 'base/message.html'%}
+            </div>
+            <div class="col-md-12 m-b-30">
+                <!-- begin page title -->
+                <div class="d-block d-sm-flex flex-nowrap align-items-center">
+                    <div class="page-title mb-2 mb-sm-0">
+                        <h1>Versement concernant la facture : <i>{{facture}}</i></h1>
+                    </div>
+                </div>
+                <div class="d-block d-sm-flex flex-nowrap align-items-center">
+                    <div class="page-title mb-2 mb-sm-0">
+                        <a href="{% url 'liste_facture_fournisseur'%}" style="font-size:15px; color: blue"> Retour</a>
+                    </div>
+                </div>
+                <!-- end page title -->
+            </div>
+        </div>
+        <!-- end row -->
+        <!-- begin row -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-statistics">
+                    <div class="card-body table-responsive">
+                        <table class="table table-bordered table-striped mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">
+                                        #
+                                    </th>
+                                    <th class="text-center">
+                                        Fournisseur
+                                    </th>
+                                    <th class="text-center">
+                                        Référence de la Facture
+                                    </th>
+                                    <th class="text-center">
+                                        Versement
+                                    </th>
+                                    <th class="text-center">
+                                        Date
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for filtre in filtre_facture %}
+                                <tr>
+                                    <th scope="row">{{filtre.id}}</th>
+                                    <td>{{filtre.facture_fournisseur.fournisseur}}</td>
+                                    <td>{{filtre.facture_fournisseur}}</td>
+                                    <td>{{filtre.montant_versement}}</td>
+                                    <td>{{filtre.date_versement}}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end container-fluid -->
+</div>
+{% else %}
+    {% include 'base/message_page.html' %}
+{% endif %}
+<!-- end app-main -->
+
+{% endblock %}

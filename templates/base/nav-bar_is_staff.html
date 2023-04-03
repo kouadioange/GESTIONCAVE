@@ -1,0 +1,70 @@
+<li>
+                        <a href="{% url 'accueil' %}" aria-expanded="false">
+                            <i class="nav-icon ti ti-rocket"></i>
+                            <span class="nav-title">Accueil</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'liste_produits' %}" aria-expanded="false">
+                            <i class="nav-icon ti ti-email"></i>
+                            <span class="nav-title">Produits</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="has-arrow" aria-expanded="false">
+                            <i class="nav-icon ti ti-email"></i>
+                            <span class="nav-title">Gestion</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li> <a href="{% url 'ajouter_fournisseur' %}">Fournisseurs</a> </li>
+                            <li> <a href="{% url 'ajouter_clients' %}">Clients</a> </li>
+                            <li> <a href="{% url 'approvision_produits' %}">Approvisionnement</a> </li>
+                            <li> <a href="{% url 'versement_fournisseur' %}">Versement Fournisseur</a> </li>
+                            <li> <a href="{% url 'liste_facture_client_impayer' %}">Versement Client</a> </li>
+                            <li> <a href="{% url 'liste_facture_client' %}">toutes les ventes</a> </li>
+                            <li> <a href="#">Stocks produit </a> </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="{% url 'creer_facture_client'%}" aria-expanded="false">
+                            <i class="nav-icon ti ti-rocket"></i>
+                            <span class="nav-title">Vendre</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'comptabilite_accueil'%}" aria-expanded="false">
+                            <i class="nav-icon ti ti-email"></i>
+                            <span class="nav-title">Comptabilité</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="has-arrow" aria-expanded="false">
+                            <i class="nav-icon ti ti-pie-chart"></i>
+                            <span class="nav-title">Charges et Dépenses</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li> <a href="{% url 'charges'%}">Charges</a> </li>
+                        </ul>
+                        <ul aria-expanded="false">
+                            <li> <a href="{% url 'depenses' %}">Dépenses</a> </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">
+                            <i class="nav-icon ti ti-pie-chart"></i>
+                            <span class="nav-title">Utilisateur</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li> <a href="{% url 'inscription' %}">Créer</a></li>
+                            <li> <a href="{% url 'liste_user' %}">listes</a></li>
+                            <li> <a href="{% url 'change_password'%}">Changer mot de passe</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a aria-expanded="false" href="{% url 'logoutUser' %}">
+                            <i class="nav-icon ti ti-pie-chart"></i>
+                            <span class="nav-title">Déconnexion</span>
+                        </a>
+                    </li>

@@ -1,0 +1,169 @@
+{% extends 'base/main.html'%}
+{% load static %}
+{% block title %} Ajouter-produits {% endblock %}
+
+
+{% block nave%}
+    {% include 'base/nav-bar.html' %}
+{% endblock nave%}
+
+{% block content%}
+{% if user.is_staff %}
+<!-- begin app -->
+<div class="app-container">
+    <!-- begin app-main -->
+    <div class="app-main" id="main">
+        <!-- begin container-fluid -->
+        <div class="container-fluid">
+            <!-- begin row -->
+            <div class="row">
+                <div class="col-md-12">
+                    {% include 'base/message.html'%}
+                </div>
+                <div class="col-xxl-9 m-b-30">
+                    <div class="card card-statistics dating-contant h-100 mb-0">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h4 class="card-title">Créer un produits</h4>
+                                </div>
+                                <div class="col-lg-6">
+                                    <a type="button" href="{% url 'liste_produits' %}"  class="btn btn-primary"> Liste des produits </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body" style="height: 200px">
+                            <div class="table">
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <form method="POST" enctype="multipart/form-data" action="{% url 'ajouter_produits' %}">
+                                            {% csrf_token %}
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <input type="input" onkeyup="this.value=this.value.toUpperCase()" class="form-control" id="designation" name="designation" placeholder="Désignation" required>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <input type="input" onkeyup="this.value=this.value.toUpperCase()" class="form-control" id="reference" name="reference" placeholder="reference" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-row ">
+                                                 <div class="form-group col-md-4">
+                                                    <select class="form-control" name="categorie" id="categorie" required>
+                                                        <option>--- choisir la catégorie ---</option>
+                                                        <option value="BIERE">BIERE</option>
+                                                        <option value="VINS">VINS</option>
+                                                        <option value="LIQUEUR">LIQUEUR</option>
+                                                        <option value="CHAMPAGNE">CHAMPAGNE</option>
+                                                        <option value="EAU">EAU</option>
+                                                        <option value="SUCRERIE">SUCRERIE</option>
+                                                        <option value="ENERGIE">ENERGIE</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <select class="form-control" name="status" id="status" required>
+                                                        <option>--- choisir la catégorie ---</option>
+                                                        <option value="ACTIF">ACTIF</option>
+                                                        <option value="INACTIF">INACTIF</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <input type="file" class="form-control" id="image" name="image" required>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="form-row">
+                                                <input type="submit" class="btn btn-primary" name="ajouter_produit" value="Ajouter un produit" >
+                                                <input type="reset" style="margin-right: 5px" class="btn btn-danger"  value="Réintialiser">
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-lg-2">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-9 m-b-30">
+                    <div class="card card-statistics dating-contant h-100 mb-0">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h4 class="card-title">Création des prix</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body" style="height: 255px">
+                            <div class="table">
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <form method="POST" enctype="multipart/form-data" action="{% url 'ajouter_produits' %}">
+                                            {% csrf_token %}
+                                            <div class="form-row">
+                                                <div class="row select-wrapper">
+                                                    <div class="col-lg-12 selects-contant" style="width:370px">
+                                                        <select class="js-basic-single form-control" id="choix_client" name="client" required>
+                                                            <option>--- choisir la catégorie ---</option>
+                                                             {% for prod in produits %}
+                                                            <option value="{{prod.id}}">{{prod.designation}}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <select class="form-control" name="type" id="type" required>
+                                                        <option>--- choisir le type ---</option>
+                                                        <option value="DETAIL">DETAIL</option>
+                                                        <option value="CARTON">CARTON</option>
+                                                        <option value="PACK">PACK</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-md-2">
+                                                    <input type="input" onkeyup="this.value=this.value.toUpperCase()" class="form-control" id="code_barre" name="code_barre" placeholder="Code barre" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-row ">
+                                                 <div class="form-group col-md-4">
+                                                    <input type="number" class="form-control" id="prix_achat" name="prix_achat" placeholder="Prix d'achat" required>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <input type="number" class="form-control" id="prix_vente" name="prix_vente" placeholder="Prix de vente" required>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <input type="number" class="form-control" id="nombre_unite" name="nombre_unite" placeholder="Nombre unite" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-row ">
+                                                 <div class="form-group col-md-12">
+                                                    <input type="number" class="form-control" placeholder="0.0" readonly>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="form-row">
+                                                <input type="submit" class="btn btn-primary" name="ajouter_prix" value="Ajouter le Prix">
+                                                <input type="reset" style="margin-right: 5px" class="btn btn-danger"  value="Réintialiser">
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-lg-2">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end container-fluid -->
+    </div>
+    <!-- end app-main -->
+</div>
+<!-- end app -->
+{% else %}
+    {% include 'base/message_page.html' %}
+{% endif %}
+{% endblock %}

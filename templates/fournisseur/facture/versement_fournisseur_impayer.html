@@ -1,0 +1,95 @@
+{% extends 'base/main.html'%}
+{% load static %}
+{% block title %} versement Fournisseur {% endblock %}
+
+
+{% block nave%}
+    {% include 'base/nav-bar.html' %}
+{% endblock nave%}
+
+{% block content%}
+{% if user.is_staff %}
+<!-- begin app -->
+<div class="app-container">
+    <!-- begin app-main -->
+    <div class="app-main" id="main">
+        <!-- begin container-fluid -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    {% include 'base/message.html'%}
+                </div>
+            </div>
+
+            <!-- begin row -->
+            <div class="row">
+                <div class="col-xxl-9 m-b-30">
+                    <div class="card card-statistics dating-contant h-100 mb-0">
+                        <div class="card-header" style="background-color: red;">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h4 class="card-title" style="color:white">Liste des Factures impayées</h4>
+                                </div>
+                                <div class="col-lg-6">
+                                    <i style="color:white">Pour voir toutes les factures cliquer <a href="{% url 'liste_facture_fournisseur' %}" class="btn btn-primary"> ici</a>.</i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body pt-2 scrollbar scroll_dark" style="height: 400px">
+                            <div class="table-responsive">
+                                <table id="datatable-buttons" class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="border-top-0">#</th>
+                                            <th class="border-top-0">Réference</th>
+                                            <th class="border-top-0">Fournisseur</th>
+                                            <th class="border-top-0">Montant Facture</th>
+                                            <th class="border-top-0">Reste à payer</th>
+                                            <th class="border-top-0">Action</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody class="text-muted">
+                                    {% for facture in factures %}
+                                        <tr>
+                                            <td>{{facture.id}}</td>
+
+                                            <td>{{facture.reference}}</td>
+                                            <td>
+                                                {{facture.fournisseur.nom_prenom}}
+                                            </td>
+                                            <td>
+                                                <label style="font-size:15px;" class="badge mb-0 badge-info-inverse">{{facture.montant_facture }}</label>
+                                            </td>
+                                            <td>
+                                                <label style="font-size:15px;" class="badge mb-0 badge-success-inverse">{{facture.reste_a_payer }}</label>
+                                            </td>
+                                            <td>
+                                                <a href="{% url 'ajouter_versement' facture.id %}"><b style="size:20px; color:green">SOLDEE</b></a>
+                                            </td>
+                                        </tr>
+                                    {% endfor%}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- end app-main -->
+</div>
+<!-- end app -->
+<script>
+    function calcul(){
+        var fournisseur = document.getElementById("formulaire").elements["fournisseur"].value;
+        var reference = document.getElementById("formulaire").elements["ref_facture"].value;
+        document.getElementById("formulaire").elements["ref_facture"].value = "";
+    }
+</script>
+{% else %}
+    {% include 'base/message_page.html' %}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,118 @@
+{% extends 'base/main.html'%}
+{% load static %}
+{% block title %} Liste toutes Factures clients {% endblock %}
+
+
+{% block nave%}
+    {% include 'base/nav-bar.html' %}
+{% endblock nave%}
+
+{% block content%}
+
+{% if user.is_authenticated %}
+<!-- begin app -->
+<div class="app-container">
+    <!-- begin app-main -->
+    <div class="app-main" id="main">
+        <!-- begin container-fluid -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    {% include 'base/message.html'%}
+                </div>
+            </div>
+            <!-- begin row -->
+            <div class="row">
+                <div class="col-xxl-9 m-b-30">
+                    <div class="card card-statistics dating-contant h-100 mb-0">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <h4>Toutes les factures : {{compte_facture}}</h4>
+                                </div>
+                                <div class="col-lg-6">
+                                    <form method="post" action="#">
+                                        {%csrf_token%}
+                                        <div class="form-row">
+                                            <div class="form-group col-md-2">
+                                                <a class="btn btn-xm btn-primary" href="{%url 'liste_facture_client'%}" name="Voir_tous">Voir tous</a>
+                                            </div>
+                                            <div class="form-group col-md-5">
+                                                <input type="date" name="date_recherche" required class="form-control">
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <button class="btn btn-xm btn-primary" name="recherche"><i class="ion ion-ios-search"></i></button>
+                                                <h4 class="">T.I: {{total_impayer}}</h4>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="row">
+                                        <div class="clo-md-6">
+                                            <form method="post">
+                                                {%csrf_token%}
+                                                <button class="btn btn-xm btn-danger" name="le_mois">le Mois</button>
+                                            </form>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h4 class="">TF: {{total}}</h4>
+                                            {%if date_recherche == '' %}<h5 class="">date</h5>{%else%}<h4>{{date_recherche}}</h4>{%endif%}
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="card-body pt-2 scrollbar scroll_dark" style="height: auto">
+                            <div class="table-responsive">
+
+                                <table id="datatable-buttons" class="table table-striped">
+
+                                    <thead>
+                                        <tr>
+                                            <th class="border-top-0">Référence</th>
+                                            <th class="border-top-0">Client</th>
+                                            <th class="border-top-0">Total</th>
+                                            <th class="border-top-0">Reste à payer</th>
+                                            <th class="border-top-0">Date</th>
+                                            <th class="border-top-0">Status</th>
+                                            <th class="border-top-0">Voir</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody class="text-muted">
+                                    {% for toute_facture_client in toutes_facture_client %}
+                                        <tr>
+                                            <td>{{ toute_facture_client.reference_vente}}</td>
+                                            <td>{{ toute_facture_client.client}}</td>
+                                            <td>{{ toute_facture_client.montant_facture}}</td>
+                                            <td>{{ toute_facture_client.reste_a_payer}}</td>
+                                            <td>{{ toute_facture_client.date_facturation|date:"d/m/Y"}}</td>
+                                            <td>{{ toute_facture_client.status}}</td>
+                                            <td><a href="{% url 'liste_facture' toute_facture_client.reference_vente %}" class="btn btn-warning"><i class="ion ion-ios-eye-outline"></i></a></td>
+                                        </tr>
+                                    {% endfor%}
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-md-12 d-flex justify-content-center align-items-center">
+                    {% include 'base/paginations.html' with page=toutes_facture_client %}
+                </div>
+            </div>
+        </div>
+        <!-- end container-fluid -->
+    </div>
+    <!-- end app-main -->
+</div>
+<!-- end app -->
+{% else %}
+    {% include 'base/message_page.html' %}
+{% endif %}
+{% endblock %}

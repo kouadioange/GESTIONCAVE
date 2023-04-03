@@ -1,0 +1,105 @@
+{% extends 'base/main.html'%}
+{% load static %}
+{% block title %} Liste vente sur facture {% endblock %}
+
+
+{% block nave%}
+    {% include 'base/nav-bar.html' %}
+{% endblock nave%}
+
+{% block content%}
+
+{% if user.is_authenticated %}
+<!-- begin app -->
+<div class="app-container">
+    <!-- begin app-main -->
+    <div class="app-main" id="main">
+        <!-- begin container-fluid -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    {% include 'base/message.html'%}
+                </div>
+            </div>
+            <!-- begin row -->
+            <div class="row">
+                <div class="col-xxl-9 m-b-30">
+                    <div class="card card-statistics dating-contant h-100 mb-0">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <h4 class="">Facture N°: {{ref}}</h4>
+                                </div>
+                                <div class="col-lg-3">
+                                    <h4 class="">Status :
+                                        {% if status == 'IMPAYER' %}
+                                            <span style="color: red;">{{status}}</span>
+                                        {% else %}
+                                            <span style="color: green;">{{status}}</span>
+                                        {% endif%}
+                                    </h4>
+                                </div>
+                                <div class="col-lg-2">
+                                    <h4 class="">Total facture : {{total}}</h4>
+                                </div>
+                                <div class="col-lg-4">
+                                    <a href="{% url 'liste_facture_client' %}" class="btn btn-info btn-xm"><i class="ion ion-ios-arrow-back"></i></a>
+                                    <a href="{% url 'imprimer_recu' ref %}" target="_blank" class="btn btn-info btn-xm"> Imprimer reçu</a>
+                                    <a href="{% url 'creer_facture_client' %}" class="btn btn-warning btn-xm"> Autre Vente </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body pt-2 scrollbar scroll_dark" style="height: 300px">
+                            <div class="table-responsive">
+
+                                <table id="datatable-buttons" class="table table-striped">
+
+                                    <thead>
+                                        <tr>
+                                            <th class="border-top-0">#</th>
+                                            <th class="border-top-0">Référence</th>
+                                            <th class="border-top-0">Désignation</th>
+                                            <th class="border-top-0">Qte</th>
+                                            <th class="border-top-0">Prix vente</th>
+                                            <th class="border-top-0">Total</th>
+                                            <th class="border-top-0">Date</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody class="text-muted">
+                                    {% for vente in ventes %}
+                                        <tr>
+                                            <td>{{vente.id}}</td>
+
+                                            <td>{{ vente.reference}}</td>
+                                            <td>{{ vente.type_emballage}}</td>
+                                            <td>{{ vente.quantite_vente}}</td>
+                                            <td>{{ vente.type_emballage.prix_vente }}</td>
+                                            <td>{{ vente.total_unitaire}}</td>
+                                            <td>{{ vente.date_vente}}</td>
+                                        </tr>
+
+                                    {% endfor%}
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-md-12 d-flex justify-content-center align-items-center">
+                    {% include 'base/paginations.html' with page=clients %}
+                </div>
+            </div>
+        </div>
+        <!-- end container-fluid -->
+    </div>
+    <!-- end app-main -->
+</div>
+<!-- end app -->
+{% else %}
+    {% include 'base/message_page.html' %}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base/main.html'%}
+{% load static %}
+{% block title %} Liste Utilisateur {% endblock %}
+
+
+{% block nave%}
+    {% include 'base/nav-bar.html' %}
+{% endblock nave%}
+
+{% block content%}
+{% if user.is_authenticated and user.is_superuser %}
+    <!-- begin app -->
+
+    <!-- end app -->
+{% else %}
+    {% include 'base/message_page.html' %}
+{% endif %}
+{% endblock %}

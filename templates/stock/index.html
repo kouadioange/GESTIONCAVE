@@ -1,0 +1,62 @@
+{% extends 'base/main.html'%}
+{% load static %}
+{% block title %} ACCUEIL {% endblock %}
+
+
+{% block nave%}
+    {% include 'base/nav-bar.html' %}
+{% endblock nave%}
+
+{% block content%}
+{% if user.is_authenticated and user.is_staff and user.is_superuser %}
+    {% include 'base/dashbord.html'%}
+{% elif user.is_authenticated and user.is_staff%}
+    {% include 'base/dashbord.html'%}
+{% else %}
+    <div class="app-container">
+        <div class="app-main" id="main">
+            <div class="container-fluid">
+                <!-- begin row -->
+                <div class="row">
+                    <div class="col-md-12 m-b-30">
+                        <!-- begin page title -->
+                        <div class="d-block d-sm-flex flex-nowrap align-items-center">
+                            <div class="page-title mb-2 mb-sm-0">
+                                <h1>Accueil (Bienvenue, {{request.user}})</h1>
+                            </div>
+                            <div class="ml-auto d-flex align-items-center">
+                                <nav>
+                                    <ol class="breadcrumb p-0 m-b-0">
+                                        <li class="breadcrumb-item">
+                                            <a href="{% url 'accueil' %}"><i class="ti ti-home"></i></a>
+                                        </li>
+                                        <li class="breadcrumb-item">
+                                            <a href="{% url 'accueil' %}">Dashboard</a>
+                                        </li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+                    </div>
+                </div>
+                <!-- begin row -->
+                <div class="row">
+                    <div class="col-lg-6 col-xxl-3 m-b-30">
+                        <div class="card card-statistics h-100 mb-0">
+                            <div class="card-body">
+                                <div class="d-flex h-100">
+                                    <div class="align-self-center">
+                                        <marquee><h3 class="f-26 mb-0"> LA DATE</h3></marquee>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% endblock %}

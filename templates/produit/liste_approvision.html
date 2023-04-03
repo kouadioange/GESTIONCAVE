@@ -1,0 +1,94 @@
+{% extends 'base/main.html'%}
+{% load static %}
+{% block title %} Liste-Approvision customer {% endblock %}
+
+
+{% block nave%}
+    {% include 'base/nav-bar.html' %}
+{% endblock nave%}
+
+{% block content%}
+{% if user.is_staff %}
+<!-- begin app -->
+<div class="app-container">
+    <!-- begin app-main -->
+    <div class="app-main" id="main">
+        <!-- begin container-fluid -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    {% include 'base/message.html'%}
+                </div>
+            </div>
+            <!-- begin row -->
+            <div class="row">
+                <div class="col-xxl-9 m-b-30">
+                    <div class="card card-statistics dating-contant h-100 mb-0">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h4 class="card-title">Liste des produits</h4>
+                                </div>
+                                <div class="col-lg-3">
+                                    <a type="button" href="{% url 'approvision_produits' %}"  class="btn btn-primary"> Retour </a>
+                                    <a type="button" href="#"  class="btn btn-primary"> <i class="nav-icon ti ti-print"></i> Imprimer </a>
+                                </div>
+                                <div class="col-lg-3">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body pt-2 scrollbar scroll_dark" style="height: 500px">
+                            <div class="table-responsive">
+
+                                <table id="datatable-buttons" class="table table-striped">
+
+                                    <thead>
+                                        <tr>
+                                            <th class="border-top-0">#</th>
+                                            <th class="border-top-0">Reference</th>
+                                            <th class="border-top-0">Fournisseur</th>
+                                            <th class="border-top-0">Produit</th>
+                                            <th class="border-top-0">Quantité réçu</th>
+                                            <th class="border-top-0">date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-muted">
+                                        {% if listes %}
+                                        {% for liste in listes %}
+
+                                            <tr>
+                                                <td>{{liste.id}}</td>
+                                                <td>{{liste.reference}}</td>
+                                                <td>{{liste.fournisseur}}</td>
+                                                <td>{{liste.type_emballage}}</td>
+                                                <td><label class="badge mb-0 badge-success-inverse">{{liste.quantite_approvision}}</label></td>
+                                                <td>{{liste.date_renseigner|date:'d-m-y'}}</td>
+                                            </tr>
+
+                                        {% endfor %}
+                                        {% else %}
+                                        <h1> Aucune information </h1>
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-md-12 d-flex justify-content-center align-items-center">
+                    {% include 'base/paginations.html' with page=listes %}
+                </div>
+            </div>
+        </div>
+        <!-- end container-fluid -->
+    </div>
+    <!-- end app-main -->
+</div>
+<!-- end app -->
+{% else %}
+    {% include 'base/message_page.html' %}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,111 @@
+{% extends 'base/main.html'%}
+{% load static %}
+{% block title %} Eregistrement des Dépenses {% endblock %}
+
+
+{% block nave%}
+    {% include 'base/nav-bar.html' %}
+{% endblock nave%}
+
+{% block content%}
+{% if user.is_staff %}
+<div class="app-main" id="main">
+    <!-- begin container-fluid -->
+    <div class="container-fluid">
+        <!-- begin row -->
+        <div class="row">
+            <div class="col-md-12">
+                {% include 'base/message.html'%}
+            </div>
+            <div class="col-md-12 m-b-30">
+                <!-- begin page title -->
+                <div class="d-block d-sm-flex flex-nowrap align-items-center">
+                    <div class="page-title mb-2 mb-sm-0">
+                        <h1>Enregistrer une Dépense</h1>
+                    </div>
+                    <div class="ml-auto d-flex align-items-center">
+                        {% if total > 0 %}
+                            <h3 style="font-size: 20px;"> TOTAL DEPENSES : {{total}} FCFA</h3>
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- end page title -->
+            </div>
+        </div>
+        <!-- end row -->
+        <!-- begin row -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-statistics">
+                    <div class="card-header">
+                        <div class="card-heading">
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <div class="row select-wrapper">
+                                        <div class="col-lg-6 selects-contant">
+                                            <select class="js-basic-single form-control" name="nom_depense" required>
+                                                <option>*********** Entrez le libellé de la charge ***********</option>
+                                                {% for charge in charges %}
+                                                    <option value="{{charge.id}}">{{charge.nom}}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <i>la depense n'existe pas ?? <a href="{% url 'charges' %}">Taper ici</a></i>
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <input type="number" required class="form-control" name="montant_depense" placeholder="montant">
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <input type="date" required class="form-control" name="date_depense" >
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <input type="submit" class="btn btn-warning" name="ajouter_depense" value="Enregistrer">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card-body table-responsive">
+                        <table class="table table-bordered table-striped mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">
+                                        #
+                                    </th>
+                                    <th class="text-center">
+                                        Dépenses effectuées
+                                    </th>
+                                    <th class="text-center">
+                                        montant
+                                    </th>
+                                    <th class="text-center">
+                                        Date de Dépense
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for liste_dep in liste_depense%}
+                                <tr>
+                                    <th scope="row">{{liste_dep.id}}</th>
+                                    <td>{{liste_dep.charges}}</td>
+                                    <td>{{liste_dep.montant}}</td>
+                                    <td>{{liste_dep.date_enregistrer}}</td>
+                                </tr>
+                            {% endfor%}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end container-fluid -->
+</div>
+{% else %}
+    {% include 'base/message_page.html' %}
+{% endif %}
+<!-- end app-main -->
+
+{% endblock %}

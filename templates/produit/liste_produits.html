@@ -1,0 +1,136 @@
+{% extends 'base/main.html'%}
+{% load static %}
+{% block title %} Liste-produits {% endblock %}
+
+{% block nave%}
+    {% include 'base/nav-bar.html' %}
+{% endblock nave%}
+
+{% block content%}
+{% if user.is_staff %}
+<!-- begin app -->
+<div class="app-container">
+    <!-- begin app-main -->
+    <div class="app-main" id="main">
+        <!-- begin container-fluid -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    {% include 'base/message.html'%}
+                </div>
+            </div>
+            <!-- begin row -->
+            <div class="row">
+                <div class="col-xxl-9 m-b-30">
+                    <div class="card card-statistics dating-contant h-100 mb-0">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h4 class="card-title">Liste des produits</h4>
+                                </div>
+                                <div class="col-lg-6">
+                                    <a type="button" href="{% url 'ajouter_produits' %}"  class="btn btn-primary"> Créer produit </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body pt-2 scrollbar scroll_dark" style="height: 500px">
+                            <div class="table-responsive">
+
+                                <table id="datatable-buttons" class="table table-striped">
+
+                                    <thead>
+                                        <tr>
+                                            <th class="border-top-0">#</th>
+                                            <th class="border-top-0">Désignation</th>
+                                            <th class="border-top-0">réference</th>
+                                            <th class="border-top-0">type produit</th>
+                                            <th class="border-top-0">Prix unitaire</th>
+                                            <th class="border-top-0">Prix vente</th>
+                                            <th class="border-top-0">Qté en Stock</th>
+                                            <th class="border-top-0">status</th>
+                                            <th class="border-top-0">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-muted">
+                                    {% for produit in produits %}
+                                        <tr>
+                                            <td>{{produit.id}}</td>
+                                            <td>
+                                                <div class="bg-img">
+                                                    {% if produit.produit.image %}
+                                                        <img src="/media/{{produit.produit.image}}" width="30" height="30" class="img-fluid" alt="introuvable">
+                                                    {% else %}
+                                                        <span> Pas d'image </span>
+                                                    {% endif %}
+                                                </div>
+                                                <p>{{produit.produit}} {{produit.libelle}}</p>
+                                            </td>
+                                            <td>{{ produit.produit.reference}}</td>
+                                            <td>
+                                                <label class="badge mb-0 badge-success-inverse">{{ produit.produit.categorie}}</label>
+                                            </td>
+                                            <td>
+                                                <label class="badge mb-0 badge-success-inverse">{{ produit.prix_achat }}</label>
+                                            </td>
+                                            <td>
+                                                <label class="badge mb-0 badge-success-inverse">{{ produit.prix_vente}}</label>
+                                            </td>
+                                            <td>
+                                                <label class="{% if produit.quantite_stock < 3 %} badge mb-0 badge-danger-inverse {%else%} badge mb-0 badge-info-inverse {%endif%}">{{ produit.quantite_stock}}</label>
+                                            </td>
+                                            <td>
+                                                <label class="badge mb-0 badge-succes-inverse">
+                                                    {% if produit.quantite_stock > 1%}
+                                                        {{ produit.produit.status}}
+                                                        {% elif produit.quantite_stock == 1 %}
+                                                            DERNIER
+                                                        {% else %}
+                                                            INACTIF
+                                                    {% endif %}
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <a type="button" class="btn btn-xm btn-primary" href="#"><i class="fa fa-pencil"></i></a>
+                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#suppModal{{produit.id}}"><i class="fa fa-trash" ></i></button>
+                                            </td>
+                                        </tr>
+                                    {%endfor%}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-md-12 d-flex justify-content-center align-items-center">
+                    {% include 'base/paginations.html' with page=produits %}
+                </div>
+            </div>
+             <div class="modal fade" id="suppModal{{produit.id}}" tabindex="-1" role="dialog" aria-labelledby="verticalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="verticalCenterTitle"> Voulez-vous supprimer ce produit <span class="">({{ produit.produit }}{{ produit.libelle }})</span> ??? </h5>
+                        </div>
+                        <div class="modal-footer">
+                            <form method="post">
+                                {%csrf_token%}
+                                <input type="text" class="form-control" hidden value="{{ produit.id }}" name="id_pour_supprimer" >
+                                <button type="button" class="btn btn-dark" data-dismiss="modal">Annuler</button>
+                                <button type="submit" name="suppboutton" class="btn btn-danger">Supprimer</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end container-fluid -->
+    </div>
+    <!-- end app-main -->
+</div>
+<!-- end app -->
+{% else %}
+    {% include 'base/message_page.html' %}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends 'base/main.html'%}
+{% load static %}
+{% block title %} Liste-Vente customer {% endblock %}
+
+
+{% block nave%}
+    {% include 'base/nav-bar.html' %}
+{% endblock nave%}
+
+{% block content%}
+
+<!-- begin app -->
+<div class="app-container">
+    <!-- begin app-main -->
+    <div class="app-main" id="main">
+        <!-- begin container-fluid -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    {% include 'base/message.html'%}
+                </div>
+            </div>
+            <!-- begin row -->
+            <div class="row">
+                <div class="col-xxl-9 m-b-30">
+                    <div class="card card-statistics dating-contant h-100 mb-0">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <h4 class="card-title">TOTAL DU JOUR</h4>
+                                    <h4> Nombre de facture: {{compte_facture}} </h4>
+                                </div>
+                                <div class="col-lg-3">
+                                    <h1><span>bbb</span></h1>
+                                </div>
+                                <div class="col-lg-3">
+                                    <h1><span>{{point}}</span></h1>
+                                </div>
+                                <div class="col-lg-3">
+                                    <a href="{% url 'creer_facture_client' %}" class="btn btn-primary">Retour</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body pt-2 scrollbar scroll_dark" style="height: 500px">
+                            <div class="table-responsive">
+
+                                <table id="datatable-buttons" class="table table-striped">
+
+                                    <thead>
+                                        <tr>
+                                            <th class="border-top-0">#</th>
+                                            <th class="border-top-0">Client</th>
+                                            <th class="border-top-0">Référence</th>
+                                            <th class="border-top-0">Montant</th>
+                                            <th class="border-top-0">Reste à payer</th>
+                                            <th class="border-top-0">Statut</th>
+                                            <th class="border-top-0">Date</th>
+                                            <th class="border-top-0">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-muted">
+                                        {% if vente_par_date %}
+                                        {% for vente_par_dates in vente_par_date %}
+
+                                            <tr>
+                                                <td>{{vente_par_dates.id}}</td>
+                                                <td>{{vente_par_dates.client}}</td>
+                                                <td>{{vente_par_dates.reference_vente}}</td>
+                                                <td><label class="badge mb-0 badge-success-inverse" style="font-size:15px;">{{vente_par_dates.montant_facture}}</label></td>
+                                                <td>{{vente_par_dates.reste_a_payer}}</td>
+                                                <td>{{vente_par_dates.status}}</td>
+                                                <td>{{vente_par_dates.date_vente}}</td>
+                                                <td>{{vente_par_dates.date_vente}}</td>
+                                            </tr>
+
+                                        {% endfor %}
+                                        {% else %}
+                                        <h1> Aucune information </h1>
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-md-12 d-flex justify-content-center align-items-center">
+                    {% include 'base/paginations.html' with page=produits %}
+                </div>
+            </div>
+        </div>
+        <!-- end container-fluid -->
+    </div>
+    <!-- end app-main -->
+</div>
+<!-- end app -->
+{% endblock %}

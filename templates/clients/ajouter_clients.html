@@ -1,0 +1,82 @@
+{% extends 'base/main.html'%}
+{% load static %}
+{% block title %} Ajout-Clients {% endblock %}
+
+
+{% block nave%}
+    {% include 'base/nav-bar.html' %}
+{% endblock nave%}
+
+{% block content%}
+{% if user.is_staff %}
+<!-- begin app -->
+<div class="app-container">
+    <!-- begin app-main -->
+    <div class="app-main" id="main">
+        <!-- begin container-fluid -->
+        <div class="container-fluid">
+            <!-- begin row -->
+            <div class="row">
+                <div class="col-md-12">
+                    {% include 'base/message.html'%}
+                </div>
+                <div class="col-xxl-9 m-b-30">
+                    <div class="card card-statistics dating-contant h-100 mb-0">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h4 class="card-title">Nouveau Client</h4>
+                                </div>
+                                <div class="col-lg-6">
+                                    <a type="button" href="{% url 'liste_clients' %}"  class="btn btn-primary"> Liste des Clients</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body" style="height: 200px">
+                            <div class="table">
+                                <div class="row">
+
+                                    <div class="col-lg-10">
+                                        <form method="POST" enctype="multipart/form-data" action="#">
+                                            {% csrf_token %}
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <input type="input" onkeyup="this.value=this.value.toUpperCase()" class="form-control" id="nom_prenom" name="nom_prenom" placeholder="Nom et Prénom" required>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <input type="input" onkeyup="this.value=this.value.toUpperCase()" class="form-control" id="adresse" name="adresse" placeholder="Adresse" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-row ">
+                                                <div class="form-group col-md-6">
+                                                    <input class="form-control" type="text" id="ville" name="ville" required placeholder="Entrez la ville">
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <input class="form-control" type="text" id="contact" name="contact" required placeholder="Numéro de téléphone">
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="form-row">
+                                                <input type="submit" class="btn btn-primary" name="ajouter_clients" value="Ajouter" >
+                                                <input type="reset" style="margin-right: 5px" class="btn btn-danger"  value="Réintialiser">
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-lg-2">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end container-fluid -->
+    </div>
+    <!-- end app-main -->
+</div>
+<!-- end app -->
+{% else %}
+    {% include 'base/message_page.html' %}
+{% endif %}
+{% endblock %}

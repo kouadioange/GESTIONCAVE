@@ -1,0 +1,173 @@
+{% extends 'base/main.html'%}
+{% load static %}
+{% block title %} ACCUEIL {% endblock %}
+
+
+{% block nave%}
+    {% include 'base/nav-bar.html' %}
+{% endblock nave%}
+
+{% block content%}
+
+{% if user.is_authenticated and user.is_staff%}
+<!-- begin app -->
+<div class="app-container">
+    <!-- begin app-main -->
+    <div class="app-main" id="main">
+        <!-- begin container-fluid -->
+        <div class="container-fluid">
+            <div class="row">
+            <div class="col-lg-6 col-xxl-3 m-b-30">
+                <div class="card card-statistics h-100 mb-0">
+                    <div class="card-body" style="border-radius: 15px 15px;">
+                        <div class="d-flex h-100">
+                            <div class="align-self-center">
+                                <div class="apexchart-wrapper">
+                                    <div>
+                                        <h3>Valeur du Stock</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="align-self-center ml-auto">
+                                <p style="font-size: 25px; color:black;"><b>{{total_valeur_stock}}</b></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-xxl-3 m-b-30">
+                <div class="card card-statistics h-100 mb-0">
+                    <div class="card-body" style="border-radius: 15px 15px;">
+                        <div class="d-flex h-100">
+                            <div class="align-self-center">
+                                <div class="apexchart-wrapper">
+                                    <div>
+                                        <h3>Capital Investi</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="align-self-center ml-auto">
+                                <p style="font-size: 25px;"><b>{{total_investi}}</b></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-xxl-3 m-b-30">
+                <div class="card card-statistics h-100 mb-0">
+                    <div class="card-body" style="border-radius: 15px 15px;">
+                        <div class="d-flex h-100">
+                            <div class="align-self-center">
+                                <div class="apexchart-wrapper">
+                                    <div>
+                                        <h3>Total Créances</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="align-self-center ml-auto">
+                                <p style="font-size: 25px;"><b>{{total_creance}}</b></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-xxl-3 m-b-30">
+                <div class="card card-statistics h-100 mb-0">
+                    <div class="card-body" style="border-radius: 15px 15px;">
+                        <div class="d-flex h-100">
+                            <div class="align-self-center">
+                                <div class="apexchart-wrapper">
+                                    <div>
+                                        <h3>Total Dettes</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="align-self-center ml-auto">
+                                <p style="font-size: 25px;"><b>{{total_dette}}</b></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-xxl-3 m-b-30">
+                <div class="card card-statistics h-100 mb-0">
+                    <div class="card-body" style="border-radius: 15px 15px;">
+                        <div class="d-flex h-100">
+                            <div class="align-self-center">
+                                <div class="apexchart-wrapper">
+                                    <div>
+                                        <h3>Depenses</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="align-self-center ml-auto">
+                                <p style="font-size: 25px;"><b>{{total_depense}}</b></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-xxl-3 m-b-30">
+                <div class="card card-statistics h-100 mb-0">
+                    <div class="card-body" style="border-radius: 15px 15px;">
+                        <div class="d-flex h-100">
+                            <div class="align-self-center">
+                                <div class="apexchart-wrapper">
+                                    <div>
+                                        <h3>Bénéfices</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="align-self-center ml-auto">
+                                <p style="font-size: 17px; color:red;">moins vendu</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-xxl-3 m-b-30">
+                <div class="card card-statistics h-100 mb-0">
+                    <div class="card-body" style="border-radius: 15px 15px;background-color: green;">
+                        <div class="d-flex h-100">
+                            <div class="align-self-center">
+                                <div>
+                                    <h3>Bénéfices</h3>
+                                </div>
+                            </div>
+
+                            <div class="align-self-center ml-auto">
+                                <h3 style="font-size: 25px; color:white;">{{benefice}}</h3>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-6 col-xxl-3 m-b-30"  style="font-color:white;">
+                <div class="card card-statistics h-100 mb-0">
+                    <div class="card-body" style="background-color: red; border-radius: 15px 15px;">
+                        <div class="d-flex h-100">
+                            <div class="align-self-center">
+                                <div>
+                                    <h3>Bénéfices <br>(Depenses inclus)</h3>
+                                </div>
+                            </div>
+                            <div class="align-self-center ml-auto">
+                                <h3 style="font-size: 25px;color:white;">{{benefice_depense}}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end container-fluid -->
+    </div>
+    <!-- end app-main -->
+</div>
+</div>
+<!-- end app -->
+
+{% endif %}
+
+{% endblock %}
