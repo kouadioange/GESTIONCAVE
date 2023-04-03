@@ -149,9 +149,9 @@ class Facture(models.Model):
         return f"{self.reference_vente}"
 
 
-class Remise(models.Model):
-    ref_facture = models.ForeignKey(Facture, on_delete=models.CASCADE, null=True, blank=True)
-    montant_remise = models.FloatField(max_length=200, null=True, blank=True)
+# class Remise(models.Model):
+#     ref_facture = models.ForeignKey(Facture, on_delete=models.CASCADE, null=True, blank=True)
+#     montant_remise = models.FloatField(max_length=200, null=True, blank=True)
 
 
 class VersementClient(models.Model):
