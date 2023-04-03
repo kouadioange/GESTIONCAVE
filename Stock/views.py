@@ -174,7 +174,7 @@ def ajouter_produits(request):
             else:
                 messages.error(request, 'Veuillez svp entrez les informations correctes')
 
-            return redirect('/liste_produits')
+            return redirect('/liste_produits/')
 
     context = {
         'produits':produits
@@ -293,7 +293,6 @@ def enregistrer_facture_fournisseur(request, reference, id_four):
         'fournisseurs': fournisseurs,
         'total':total,
         'reference': reference
-
     }
 
     return render(request, 'fournisseur/facture/enregistrer_facture_fournisseur.html', context)
@@ -447,7 +446,7 @@ def ajouter_fournisseur(request):
                 messages.success(request, 'Enregistrer avec succès')
             else:
                 messages.error(request, 'Veuillez svp entrez les informations correctes')
-        return redirect('/liste_fournisseur')
+        return redirect('/liste_fournisseur/')
 
     return render(request, 'fournisseur/ajouter_fournisseur.html')
 
@@ -861,7 +860,7 @@ def ajouter_clients(request):
                 messages.success(request, 'Enregistrer avec succès')
             else:
                 messages.error(request, 'Veuillez svp entrez les informations correctes')
-        return redirect('/liste_clients')
+        return redirect('/liste_clients/')
 
     return render(request, 'clients/ajouter_clients.html')
 
@@ -875,7 +874,6 @@ def liste_facture(request, ref):
 
     for i in vente:
         total += i.total_unitaire
-
 
     context = {
         'status': status,
